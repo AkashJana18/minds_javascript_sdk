@@ -1,6 +1,6 @@
 // Import necessary modules
-import DatasourcesService from './DatasourcesService';
-import { ObjectNotFound, ObjectNotSupported } from './ExceptionHandling';
+import DatasourcesService from '../minds/DataService';
+import { ObjectNotFound, ObjectNotSupported } from '../minds/ExceptionHandling';
 import axios from 'axios';
 
 // Import mock utility functions
@@ -23,7 +23,7 @@ describe('DatasourcesService', () => {
     });
 
     it('should create a new datasource successfully', async () => {
-        const mockDatasource = { name: 'my_datasource', engine: 'postgres' };
+        const mockDatasource = { name: 'demo_datasource', engine: 'postgres' };
         mockPost('/datasources', mockDatasource); // Use the mock utility function
         // Alternatively, if `create` internally uses `post`, just simulate the expected behavior
         // You can adjust as necessary based on how your method is set up.
@@ -31,7 +31,7 @@ describe('DatasourcesService', () => {
         const datasource = await datasourcesService.create(mockDatasource);
 
         // Expectations
-        expect(datasource.name).toBe('my_datasource');
+        expect(datasource.name).toBe('demo_datasource');
         expect(api.post).toHaveBeenCalledWith('/datasources', mockDatasource);
     });
 
@@ -53,29 +53,29 @@ describe('DatasourcesService', () => {
     });
 
     it('should get a datasource by name successfully', async () => {
-        const mockDatasource = { name: 'my_datasource', engine: 'postgres' };
-        mockGet('/datasources/my_datasource', mockDatasource); // Use the mock utility function
+        const mockDatasource = { name: 'demo_datasource', engine: 'postgres' };
+        mockGet('/datasources/demo_datasource', mockDatasource); // Use the mock utility function
 
-        const datasource = await datasourcesService.get('my_datasource');
+        const datasource = await datasourcesService.get('demo_datasource');
 
         // Expectations
-        expect(datasource.name).toBe('my_datasource');
+        expect(datasource.name).toBe('demo_datasource');
         expect(datasource.engine).toBe('postgres');
     });
 
     it('should delete a datasource by name successfully', async () => {
-        mockDelete('/datasources/my_datasource'); // Use the mock utility function
+        mockDelete('/datasources/demo_datasource'); // Use the mock utility function
 
-        await datasourcesService.drop('my_datasource');
+        await datasourcesService.drop('demo_datasource');
 
         // Expectations
-        expect(api.delete).toHaveBeenCalledWith('/datasources/my_datasource');
+        expect(api.delete).toHaveBeenCalledWith('/datasources/demo_datasource');
     });
 
     it('should throw ObjectNotSupported for an unsupported datasource type', async () => {
-        const mockDatasource = { name: 'my_datasource', engine: null };
-        mockGet('/datasources/my_datasource', mockDatasource); // Use the mock utility function
+        const mockDatasource = { name: 'demo_datasource', engine: null };
+        mockGet('/datasources/demo_datasource', mockDatasource); // Use the mock utility function
 
-        await expect(datasourcesService.get('my_datasource')).rejects.toThrow(ObjectNotSupported);
+        await expect(datasourcesService.get('demo_datasource')).rejects.toThrow(ObjectNotSupported);
     });
 });

@@ -1,7 +1,7 @@
 // Import necessary modules
-import APIClient from '../services/client/APIClient';
+import APIClient from '../minds/Client';
 import axios from 'axios';
-import { ObjectNotFound, Forbidden, Unauthorized, UnknownError } from '../models/Exceptions';
+import { ObjectNotFound, Forbidden, Unauthorized, UnknownError } from '../minds/ExceptionHandling';
 
 // Import mock utility functions
 import { mockGet, mockError } from './mock.test'; // Adjust the path based on your folder structure
