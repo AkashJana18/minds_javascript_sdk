@@ -7,7 +7,6 @@ This SDK provides a JavaScript interface for interacting with MindsDB, making it
 3. **API Interaction Handling**: Easy-to-use methods for common HTTP operations (GET, POST, PATCH, DELETE).
 4. **Error Handling**: Custom error handling for common HTTP status responses (e.g., 404 Not Found, 403 Forbidden, 401 Unauthorized, and generic server errors).
 
-Here's the Table of Contents updated with numbering:
 
 ---
 
