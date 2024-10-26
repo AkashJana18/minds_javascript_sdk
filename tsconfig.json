@@ -1,23 +1,22 @@
 {
-    "compilerOptions": {
-      /* Language and Environment */
-      "target": "es2016",                     /* Target a modern version of JavaScript */
-      "module": "commonjs",                   /* Module system compatible with Node.js */
-      "esModuleInterop": true,                /* Compatibility with CommonJS modules */
-      "forceConsistentCasingInFileNames": true, /* Enforce consistent file name casing */
-      "strict": true,                         /* Enable all strict type-checking options */
-      "skipLibCheck": true,                   /* Skip type-checking of declaration files */
-  
-      /* JavaScript Support */
-      // "allowJs": true,                    /* Uncomment if you need to include .js files */
-  
-      /* Output Options */
-      // "declaration": true,                /* Uncomment if you need type declaration files */
-      // "sourceMap": true,                  /* Uncomment if source maps are needed */
-  
-      /* Type Checking */
-      // "noImplicitAny": true,              /* Uncomment to avoid implicit 'any' types */
-      // "strictNullChecks": true            /* Uncomment if you need strict null checking */
-    }
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2016" /* Target a modern version of JavaScript */,
+    "module": "commonjs" /* Module system compatible with Node.js */,
+    "esModuleInterop": true /* Compatibility with CommonJS modules */,
+    "forceConsistentCasingInFileNames": true /* Enforce consistent file name casing */,
+    "strict": true /* Enable all strict type-checking options */,
+    "skipLibCheck": true /* Skip type-checking of declaration files */
+
+    /* JavaScript Support */
+    // "allowJs": true,                    /* Uncomment if you need to include .js files */
+
+    /* Output Options */
+    // "declaration": true,                /* Uncomment if you need type declaration files */
+    // "sourceMap": true,                  /* Uncomment if source maps are needed */
+
+    /* Type Checking */
+    // "noImplicitAny": true,              /* Uncomment to avoid implicit 'any' types */
+    // "strictNullChecks": true            /* Uncomment if you need strict null checking */
   }
-  
+}
