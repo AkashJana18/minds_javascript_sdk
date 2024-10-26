@@ -1,6 +1,9 @@
 // Import MindsService and axios for mocking API requests
-import MindsService from '../minds/Minds ';
+import MindsService from '../minds/Minds';
 import axios from 'axios';
+
+// Import mock utility functions
+import { mockGet, mockPost, mockDelete, mockError } from './mock.test'; // Adjust the path based on your folder structure
 
 // Mock axios to simulate API calls during tests without actually making real HTTP requests
 jest.mock('axios');
@@ -22,8 +25,7 @@ describe('MindsService', () => {
     // Test case: should successfully create a new mind
     it('should create a new mind', async () => {
         const mockMind = { name: 'demo_mind', modelName: 'gpt-3' };
-        api.get.mockResolvedValueOnce({ data: mockMind });
-        api.post.mockResolvedValueOnce({});
+        mockPost('/projects/mindsdb/minds', mockMind); // Use the mock utility function
 
         const mind = await mindsService.create('demo_mind', { modelName: 'gpt-3' });
 
@@ -34,7 +36,7 @@ describe('MindsService', () => {
     // Test case: should list all minds
     it('should list all minds', async () => {
         const mockResponse = [{ name: 'mind1' }, { name: 'mind2' }];
-        api.get.mockResolvedValueOnce({ data: mockResponse });
+        mockGet('/projects/mindsdb/minds', mockResponse); // Use the mock utility function
 
         const minds = await mindsService.list();
 
@@ -45,7 +47,7 @@ describe('MindsService', () => {
     // Test case: should get a mind by name
     it('should get a mind by name', async () => {
         const mockMind = { name: 'demo_mind', modelName: 'gpt-3' };
-        api.get.mockResolvedValueOnce({ data: mockMind });
+        mockGet('/projects/mindsdb/minds/demo_mind', mockMind); // Use the mock utility function
 
         const mind = await mindsService.get('demo_mind');
 
@@ -54,7 +56,7 @@ describe('MindsService', () => {
 
     // Test case: should delete a mind by name
     it('should delete a mind by name', async () => {
-        api.delete.mockResolvedValueOnce({});
+        mockDelete('/projects/mindsdb/minds/demo_mind'); // Use the mock utility function
 
         await mindsService.drop('demo_mind');
 
@@ -64,7 +66,7 @@ describe('MindsService', () => {
     // Test case: should handle API error when creating a mind
     it('should handle error when creating a mind', async () => {
         const errorMessage = 'Failed to create mind';
-        api.post.mockRejectedValueOnce({ response: { data: { message: errorMessage } } });
+        mockError(500, errorMessage); // Use the mock utility function
 
         await expect(mindsService.create('demo_mind', { modelName: 'gpt-3' })).rejects.toThrow(errorMessage);
     });

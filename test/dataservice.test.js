@@ -3,6 +3,9 @@ import DatasourcesService from './DatasourcesService';
 import { ObjectNotFound, ObjectNotSupported } from './ExceptionHandling';
 import axios from 'axios';
 
+// Import mock utility functions
+import { mockGet, mockPost, mockDelete, mockError } from './mock.test'; // Adjust the path based on your folder structure
+
 jest.mock('axios'); // Mocking axios
 
 describe('DatasourcesService', () => {
@@ -21,10 +24,10 @@ describe('DatasourcesService', () => {
 
     it('should create a new datasource successfully', async () => {
         const mockDatasource = { name: 'my_datasource', engine: 'postgres' };
-        api.get.mockResolvedValueOnce({ data: mockDatasource });
-        api.post.mockResolvedValueOnce({});
+        mockPost('/datasources', mockDatasource); // Use the mock utility function
+        // Alternatively, if `create` internally uses `post`, just simulate the expected behavior
+        // You can adjust as necessary based on how your method is set up.
 
-        // Call the create method on DatasourcesService
         const datasource = await datasourcesService.create(mockDatasource);
 
         // Expectations
@@ -39,7 +42,7 @@ describe('DatasourcesService', () => {
                 { name: 'datasource2', engine: 'mysql' }
             ]
         };
-        api.get.mockResolvedValueOnce(mockResponse);
+        mockGet('/datasources', mockResponse); // Use the mock utility function
 
         const datasources = await datasourcesService.list();
 
@@ -51,7 +54,7 @@ describe('DatasourcesService', () => {
 
     it('should get a datasource by name successfully', async () => {
         const mockDatasource = { name: 'my_datasource', engine: 'postgres' };
-        api.get.mockResolvedValueOnce({ data: mockDatasource });
+        mockGet('/datasources/my_datasource', mockDatasource); // Use the mock utility function
 
         const datasource = await datasourcesService.get('my_datasource');
 
@@ -61,7 +64,7 @@ describe('DatasourcesService', () => {
     });
 
     it('should delete a datasource by name successfully', async () => {
-        api.delete.mockResolvedValueOnce({});
+        mockDelete('/datasources/my_datasource'); // Use the mock utility function
 
         await datasourcesService.drop('my_datasource');
 
@@ -71,7 +74,7 @@ describe('DatasourcesService', () => {
 
     it('should throw ObjectNotSupported for an unsupported datasource type', async () => {
         const mockDatasource = { name: 'my_datasource', engine: null };
-        api.get.mockResolvedValueOnce({ data: mockDatasource });
+        mockGet('/datasources/my_datasource', mockDatasource); // Use the mock utility function
 
         await expect(datasourcesService.get('my_datasource')).rejects.toThrow(ObjectNotSupported);
     });
