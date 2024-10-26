@@ -6,7 +6,7 @@ import {
   UnknownError,
 } from "./ExceptionHandling";
 import MindsService from "./Minds";
-import DatasourcesService from "./DatasourcesService";
+import DatasourcesService from "./DataService";
 
 class APIClient {
   constructor(apiKey, baseUrl = "https://mdb.ai/api") {
