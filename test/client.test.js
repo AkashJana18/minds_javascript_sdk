@@ -3,6 +3,9 @@ import APIClient from '../services/client/APIClient';
 import axios from 'axios';
 import { ObjectNotFound, Forbidden, Unauthorized, UnknownError } from '../models/Exceptions';
 
+// Import mock utility functions
+import { mockGet, mockError } from './mock.test'; // Adjust the path based on your folder structure
+
 // Mock axios
 jest.mock('axios');
 
@@ -15,8 +18,8 @@ describe('APIClient', () => {
     });
 
     it('should successfully make a GET request and return the correct data', async () => {
-        const mockResponse = { data: { message: 'Success' }, status: 200 };
-        axios.get.mockResolvedValueOnce(mockResponse);
+        const mockResponse = { message: 'Success' };
+        mockGet('/test-endpoint', mockResponse); // Use the mock utility function
 
         const result = await apiClient.get('/test-endpoint');
 
@@ -25,30 +28,25 @@ describe('APIClient', () => {
     });
 
     it('should throw ObjectNotFound for 404 response', async () => {
-        const mockError = { response: { status: 404, data: { message: 'Not found' } } };
-        axios.get.mockRejectedValueOnce(mockError);
+        mockError(404, 'Not found'); // Use the mock utility function
 
-        // Improved description for expected exception
         await expect(apiClient.get('/non-existent')).rejects.toThrow(ObjectNotFound);
     });
 
     it('should throw Forbidden for 403 response', async () => {
-        const mockError = { response: { status: 403, data: { message: 'Forbidden' } } };
-        axios.get.mockRejectedValueOnce(mockError);
+        mockError(403, 'Forbidden'); // Use the mock utility function
 
         await expect(apiClient.get('/forbidden')).rejects.toThrow(Forbidden);
     });
 
     it('should throw Unauthorized for 401 response', async () => {
-        const mockError = { response: { status: 401, data: { message: 'Unauthorized' } } };
-        axios.get.mockRejectedValueOnce(mockError);
+        mockError(401, 'Unauthorized'); // Use the mock utility function
 
         await expect(apiClient.get('/unauthorized')).rejects.toThrow(Unauthorized);
     });
 
     it('should throw UnknownError for non-specific server errors', async () => {
-        const mockError = { response: { status: 500, data: { message: 'Server error' } } };
-        axios.get.mockRejectedValueOnce(mockError);
+        mockError(500, 'Server error'); // Use the mock utility function
 
         await expect(apiClient.get('/server-error')).rejects.toThrow(UnknownError);
     });
